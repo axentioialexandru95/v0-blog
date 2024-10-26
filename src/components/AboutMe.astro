@@ -1,0 +1,64 @@
+---
+// src/components/AboutMe.astro
+import { Github, Linkedin, Youtube } from "lucide-react";
+---
+
+<div class="bg-white rounded-lg border p-6 mb-8">
+    <h2 class="text-xl font-bold mb-4">About Me</h2>
+    <div class="flex flex-col items-center text-center">
+        <img
+            src="/avatar.jpg"
+            alt="avatar"
+            width="96"
+            height="96"
+            class="rounded-full mb-4"
+        />
+        <h3 class="text-xl font-semibold mb-2">Axentioi Alexandru</h3>
+        <p class="text-sm text-gray-600 mb-4">Laravel & Next.js Developer</p>
+        <p class="mb-4">
+            I'm a full-stack web developer specializing in Laravel and Next.js.
+            I create YouTube tutorials and write about web development.
+        </p>
+        <div class="flex space-x-4 mb-4">
+            <a
+                href="https://github.com/axentioialexandru95"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Github className="h-6 w-6" />
+            </a>
+            <a
+                href="https://www.linkedin.com/in/axentioi-alexandru-67602aa7/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Linkedin className="h-6 w-6" />
+            </a>
+            <a
+                href="https://www.youtube.com/@alexanderkrist95"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Youtube className="h-6 w-6" />
+            </a>
+        </div>
+        <div class="flex space-x-4 w-full">
+            <a
+                href="https://www.youtube.com/@alexanderkrist95"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full px-4 py-2 border border-gray-300 rounded text-center hover:bg-gray-100 transition-colors"
+            >
+                Subscribe
+            </a>
+            <a
+                href="https://www.linkedin.com/in/axentioi-alexandru-67602aa7/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full px-4 py-2 bg-blue-500 text-white rounded text-center hover:bg-blue-600 transition-colors"
+            >
+                Connect
+            </a>
+        </div>
+    </div>
+</div>

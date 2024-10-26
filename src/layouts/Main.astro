@@ -1,0 +1,31 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import NewsletterBanner from "@/components/NewsletterBanner.astro";
+
+// src/layouts/Layout.astro
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <link rel="stylesheet" href="../styles/global.css" />
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <Header />
+        <main class="min-h-screen container mx-auto px-4 py-8">
+            <slot />
+        </main>
+
+        <!-- <NewsletterBanner /> -->
+        <Footer />
+    </body>
+</html>

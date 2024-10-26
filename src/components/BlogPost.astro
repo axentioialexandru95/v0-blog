@@ -1,0 +1,66 @@
+---
+// src/components/BlogPost.astro
+import { Calendar } from "lucide-react";
+
+interface PostData {
+    title: string;
+    description: string;
+    tags: string[];
+    pubDate: Date;
+    heroImage: string;
+}
+interface Post {
+    id: string;
+    slug: string;
+    body: string;
+    collection: string;
+    data: PostData;
+}
+
+interface Props {
+    post: Post;
+}
+
+const { post } = Astro.props;
+---
+
+<a href={`/blog/${post.slug}`} class="block">
+    <article
+        class="overflow-hidden transition-shadow duration-300 hover:shadow-lg bg-white rounded-lg border"
+    >
+        <div class="flex flex-col md:flex-row">
+            <div class="md:w-1/2">
+                <img
+                    src={post.data.heroImage}
+                    alt={post.data.title}
+                    class="object-cover w-full h-full"
+                />
+            </div>
+            <div class="md:w-1/2 p-6">
+                <header class="mb-4">
+                    <h2 class="text-xl font-bold">{post.data.title}</h2>
+                    <p class="text-gray-500 flex items-center">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {
+                            post.data.pubDate.toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })
+                        }
+                    </p>
+                </header>
+                <p class="mb-4">{post.data.description}</p>
+                <div class="flex flex-wrap gap-2">
+                    {
+                        post.data.tags?.map((tag) => (
+                            <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">
+                                {tag}
+                            </span>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </article>
+</a>

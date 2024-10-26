@@ -1,0 +1,49 @@
+---
+// src/components/NewsletterBanner.astro
+import { Mail } from "lucide-react";
+---
+
+<section class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+            <p class="mb-6">
+                Stay up to date with the latest web development tips, tricks,
+                and best practices.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="relative flex-grow max-w-md">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        class="px-4 py-2 pl-10 rounded-md text-gray-900 w-full"
+                        required
+                    />
+                    <Mail
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="bg-white text-blue-600 px-6 py-2 rounded-md font-semibold hover:bg-blue-100 transition-colors"
+                >
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    const form = document.querySelector("form") as HTMLFormElement;
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = (
+            form.querySelector('input[type="email"]') as HTMLInputElement
+        ).value;
+        // Here you would typically send the email to your server or newsletter service
+        console.log(`Subscribed with email: ${email}`);
+        alert("Thank you for subscribing!");
+        form.reset();
+    });
+</script>

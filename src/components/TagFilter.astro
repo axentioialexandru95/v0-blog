@@ -1,0 +1,72 @@
+---
+// src/components/TagFilter.astro
+interface Props {
+    tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">Filter by Tags:</h2>
+    <form action="/" method="GET" class="flex flex-wrap gap-2">
+        {
+            tags.map((tag) => (
+                <button
+                    type="submit"
+                    name="tag"
+                    value={tag.toLowerCase()}
+                    class="tag-filter px-2 py-1  border border-gray-300 text-sm"
+                    class:list={[
+                        Astro.url.searchParams.get("tag")?.toLowerCase() ===
+                        tag.toLowerCase()
+                            ? "bg-blue-500 text-white"
+                            : "border-gray-300",
+                    ]}
+                    data-tag={tag}
+                >
+                    {tag}
+                </button>
+            ))
+        }
+    </form>
+</div>
+
+<script>
+    const tagButtons = document.querySelectorAll(
+        ".tag-filter",
+    ) as NodeListOf<HTMLButtonElement>;
+    const postsContainer = document.getElementById(
+        "posts-container",
+    ) as HTMLDivElement;
+    const posts = Array.from(postsContainer.children) as HTMLElement[];
+    const selectedTags = new Set<string>();
+
+    tagButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const tag = button.getAttribute("data-tag") as string;
+            if (selectedTags.has(tag)) {
+                selectedTags.delete(tag);
+                button.classList.remove("bg-blue-500", "text-white");
+                button.classList.add("border-gray-300");
+            } else {
+                selectedTags.add(tag);
+                button.classList.add("bg-blue-500", "text-white");
+                button.classList.remove("border-gray-300");
+            }
+            filterPosts();
+        });
+    });
+
+    function filterPosts() {
+        posts.forEach((post) => {
+            const postTags = Array.from(
+                post.querySelectorAll(".bg-gray-200"),
+            ).map((tag) => tag.textContent as string);
+            const shouldShow =
+                selectedTags.size === 0 ||
+                Array.from(selectedTags).every((tag) => postTags.includes(tag));
+            post.style.display = shouldShow ? "block" : "none";
+        });
+    }
+</script>
