@@ -16,6 +16,23 @@ const { title } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Add description meta tag -->
+        <meta
+            name="description"
+            content="Personal blog about web development, Laravel, Next.js and more"
+        />
+
+        <!-- Add Twitter meta tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta
+            name="twitter:description"
+            content="Personal blog about web development, Laravel, Next.js and more"
+        />
+        <meta name="twitter:image" content="/og-image.png" />
+
+        <!-- Existing OpenGraph tags -->
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={Astro.url} />
@@ -24,6 +41,9 @@ const { title } = Astro.props;
             content="Personal blog about web development, Laravel, Next.js and more"
         />
         <meta property="og:image" content="/og-image.png" />
+        <!-- Add og:site_name -->
+        <meta property="og:site_name" content="Alexandru.dev" />
+
         <title>{title}</title>
         <link rel="stylesheet" href="../styles/global.css" />
     </head>
