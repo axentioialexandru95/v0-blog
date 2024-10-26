@@ -1,20 +1,89 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+// src/pages/blog/[slug].astro
+import Main from "../../layouts/Main.astro";
+import { Calendar, Clock, Tag } from "lucide-react";
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
+	const posts = await getCollection("blog");
+	return posts.map((post) => {
+		return {
+			params: { slug: post.slug },
+			props: { post },
+		};
+	});
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
+const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<Main title={`${post.data.title} - Alexandru.dev`}>
+	<article class="">
+		<header class="mb-8">
+			<h1 class="text-4xl font-bold mb-4">{post.data.title}</h1>
+			<div class="flex items-center text-gray-600 mb-4">
+				<Calendar className="h-5 w-5 mr-2" />
+				<span class="mr-4"
+					>{
+						new Date(post.data.pubDate).toLocaleDateString(
+							"en-US",
+							{
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							},
+						)
+					}</span
+				>
+				<Clock className="h-5 w-5 mr-2" />
+				<span
+					>{Math.ceil(post.body.split(" ").length / 200)} min read</span
+				>
+			</div>
+			<div class="flex flex-wrap gap-2 mb-4">
+				{
+					post.data.tags.map((tag) => (
+						<a href={`/?tag=${tag.toLowerCase()}`}>
+							<span class="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded flex items-center">
+								<Tag className="h-4 w-4 mr-1" />
+								{tag}
+							</span>
+						</a>
+					))
+				}
+			</div>
+		</header>
+		<img
+			src={post.data.heroImage}
+			alt={post.data.title}
+			class="w-full h-5/6 object-cover rounded-lg mb-8"
+		/>
+		<div class="prose max-w-none">
+			<Content>{post.body}</Content>
+		</div>
+	</article>
+
+	<section class="max-w-3xl mx-auto mt-12">
+		<h2 class="text-2xl font-bold mb-4">Share this post</h2>
+		<div class="flex space-x-4">
+			<a
+				href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(`https://alexandru.dev/blog/${post.slug}`)}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="bg-black text-white px-4 py-2 rounded-md hover:bg-blue-500 transition-colors"
+			>
+				Share on X
+			</a>
+			<a
+				href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://alexandru.dev/blog/${post.slug}`)}&title=${encodeURIComponent(post.data.title)}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors"
+			>
+				Share on LinkedIn
+			</a>
+		</div>
+	</section>
+</Main>
